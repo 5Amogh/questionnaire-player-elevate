@@ -34,8 +34,6 @@ export class MainComponent implements OnInit {
   showFirstLastButtons = true;
   disabled = false;
 
-  pageEvent: PageEvent;
-  paginatorMap = new Map();
   paginatorLength: number;
 
   constructor(public fb: FormBuilder, public qService: QuestionnaireService) {}
@@ -63,6 +61,7 @@ export class MainComponent implements OnInit {
       step = -1;
     }
     for (let i = eventPageIndex; this.questions[i]; i += step) {
+      console.log('question',this.questions[i])
       if (Array.isArray(this.questions[i].visibleIf) && this.questions[i].canDisplay
         || !Array.isArray(this.questions[i].visibleIf)) {
         console.log('found the next one', this.questions[i])
@@ -72,16 +71,6 @@ export class MainComponent implements OnInit {
       }
     }
     return false;
-  }
-
-  questionTrackBy(index, question) {
-    return question._id;
-  }
-
-  openDialog(hint) {
-    this.isDimmed = !this.isDimmed;
-    this.childDialogComponent.hint = hint;
-    this.childDialogComponent?.openDialog('300ms', '150ms');
   }
 
   toggleQuestion(parent) {
@@ -96,14 +85,6 @@ export class MainComponent implements OnInit {
         }
       }
     });
-    if(!this.questionnaireInstance){
-      if(!this.findNextVisibleQuestion(this.pageIndex,this.questions.length)){
-        this.paginatorLength = this.pageIndex + 1;
-      }else{
-        this.paginatorLength = this.questions.length;
-      }
-    }
-   
   }
 
   canDisplayChildQ(currentQuestion: Question, currentQuestionIndex: number) {
@@ -178,7 +159,4 @@ export class MainComponent implements OnInit {
     return display;
   }
 
-  closeHint() {
-    this.isDimmed = false;
-  }
 }
