@@ -54,7 +54,7 @@
                 [question]="question"></lib-text-input>
             <ng-container *ngIf="question.responseType == reponseType.PAGEQUESTIONS">
                 <lib-questionnaire [questions]="question.pageQuestions" [questionnaireForm]="questionnaireForm"
-                    [fileUploadResponse]="fileUploadResponse"></lib-questionnaire>
+                    [fileUploadResponse]="fileUploadResponse" (dependentParent)="toggleQuestion($event)"></lib-questionnaire>
             </ng-container>
             <lib-number-input *ngIf="question.responseType == reponseType.NUMBER"
                 [questionnaireForm]="questionnaireForm" [question]="question"></lib-number-input>
@@ -72,7 +72,7 @@
                 [questionnaireForm]="questionnaireForm" [question]="question" #libMatrix>
                 <ng-template #libMainTemplateRef>
                     <lib-questionnaire [questions]="libMatrix.context.questions" [questionnaireForm]="libMatrix.matrixForm"
-                        [fileUploadResponse]="fileUploadResponse" [questionnaireInstance]="true"></lib-questionnaire>
+                        [fileUploadResponse]="fileUploadResponse" [questionnaireInstance]="true" (dependentParent)="toggleQuestion($event)"></lib-questionnaire>
                 </ng-template>
             </lib-matrix-questions>
             <lib-remarks [question]="question" *ngIf="question.showRemarks"></lib-remarks>

@@ -75,10 +75,12 @@ export class MainComponent implements OnInit {
 
   toggleQuestion(parent) {
     const { children } = parent;
+    console.log('children',children)
     this.questions.map((q, i) => {
       if (children.includes(q._id)) {
         let child = this.questions[i];
         child['canDisplay'] = this.canDisplayChildQ(child, i);
+        console.log('can this child be displayed',child['canDisplay'])
         if (child['canDisplay'] == false) {
           child.value = '';
           this.questionnaireForm.removeControl(child._id);
