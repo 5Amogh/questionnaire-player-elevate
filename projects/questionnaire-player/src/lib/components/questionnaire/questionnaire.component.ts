@@ -51,14 +51,17 @@ export class QuestionnaireComponent implements OnInit{
   }
 
   toggleQuestion(parent) {
-    this.dependentParent.emit(parent);
+    const dataToEmit = {
+      parent:parent,
+      ...(this.questions.length > 1 && {questions:this.questions})
+    }
+    this.dependentParent.emit(dataToEmit);
     const { children } = parent;
-    console.log('children',children)
+    console.log('parent',parent)
     this.questions.map((q, i) => {
       if (children.includes(q._id)) {
         let child = this.questions[i];
         child['canDisplay'] = this.canDisplayChildQ(child, i);
-        console.log('can this child be displayed',child['canDisplay'])
         if (child['canDisplay'] == false) {
           child.value = '';
           this.questionnaireForm.removeControl(child._id);

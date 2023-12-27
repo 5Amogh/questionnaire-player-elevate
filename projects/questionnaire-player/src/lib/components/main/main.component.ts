@@ -61,10 +61,8 @@ export class MainComponent implements OnInit {
       step = -1;
     }
     for (let i = eventPageIndex; this.questions[i]; i += step) {
-      console.log('question',this.questions[i])
       if (Array.isArray(this.questions[i].visibleIf) && this.questions[i].canDisplay
         || !Array.isArray(this.questions[i].visibleIf)) {
-        console.log('found the next one', this.questions[i])
         this.pageIndex = i;
         this.paginator.pageIndex = i;
         return true;
@@ -73,14 +71,15 @@ export class MainComponent implements OnInit {
     return false;
   }
 
-  toggleQuestion(parent) {
+  toggleQuestion(data) {
+    console.log('recieved data in main',data)
+    const parent = data.parent?.parent;
     const { children } = parent;
-    console.log('children',children)
+    console.log('Parent in main component',parent)
     this.questions.map((q, i) => {
       if (children.includes(q._id)) {
         let child = this.questions[i];
         child['canDisplay'] = this.canDisplayChildQ(child, i);
-        console.log('can this child be displayed',child['canDisplay'])
         if (child['canDisplay'] == false) {
           child.value = '';
           this.questionnaireForm.removeControl(child._id);
@@ -155,6 +154,7 @@ export class MainComponent implements OnInit {
             // this.questions[currentQuestionIndex].isCompleted =
             //   this.utils.isQuestionComplete(currentQuestion);
           }
+          console.log('expression array',expression)
         }
       }
     }
